@@ -13,7 +13,6 @@ import java.util.Locale;
  * in a specific week of the month. For example, "President's Day" is on the third Monday
  * of February.
  *
- * Created by schertzs on 2/19/2016.
  */
 class WeekInMonth extends Holiday {
     private Month month;
@@ -54,9 +53,6 @@ class WeekInMonth extends Holiday {
         } else {
             return date.plusDays(NUM_DAYS_IN_WEEK);
         }
-
-
-
     }
 
     @Override

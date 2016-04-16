@@ -5,7 +5,10 @@ import com.eclipsesource.json.JsonObject;
 import java.time.LocalDate;
 
 /**
- * Created by schertzs on 2/22/2016.
+ * Not yet impemented. This will represent a holiday that is defined as a specified
+ * number of days before another holiday.
+ * <p>
+ * For now, just returns today.
  */
 public class DaysBeforeHoliday extends Holiday {
 
@@ -20,6 +23,6 @@ public class DaysBeforeHoliday extends Holiday {
 
     @Override
     public String toString() {
-        return "DaysBeforeHoliday{}";
+        return "DaysBeforeHoliday is not yet implemented";
     }
 }

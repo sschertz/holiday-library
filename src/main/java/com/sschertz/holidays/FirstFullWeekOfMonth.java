@@ -9,7 +9,16 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 /**
- * Created by saraschertz on 2/21/16.
+ * Represents a {@link Holiday} for holidays that fall on a specific day of the week
+ * in the first full week of the month.
+ *
+ * Currently, I have no holidays with this definition. This is included just for
+ * completeness.
+ * <p>
+ * In this context, "first full week" means the first week of the month that starts on the normal first
+ * day of the week (Sunday or Monday) and has all the remaining weekdays. For example, if
+ * the last Sunday in the month is on the 30th, the last full week would start the previous
+ * Sunday.
  */
 class FirstFullWeekOfMonth extends Holiday {
     private Month month;
@@ -27,7 +36,8 @@ class FirstFullWeekOfMonth extends Holiday {
     @Override
     public LocalDate getDate(int year) {
 
-        return DateUtilities.getFirstFullWeekOfMonth(year,month);
+        LocalDate startOfFirstWeek = DateUtilities.getFirstFullWeekOfMonth(year, month);
+        return DateUtilities.getSpecifiedDayInWeek(startOfFirstWeek, dayOfWeek);
 
     }
 

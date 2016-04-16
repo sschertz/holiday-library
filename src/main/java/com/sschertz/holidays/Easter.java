@@ -5,7 +5,11 @@ import com.eclipsesource.json.JsonObject;
 import java.time.LocalDate;
 
 /**
- * Created by schertzs on 2/22/2016.
+ * Not yet implemented. Needs to be implemented with the rules for calcuating Easter Sunday.
+ *
+ * For now, just returns today.
+ *
+ * TODO: Implement Easter Sunday Rules
  */
 public class Easter extends Holiday {
 
@@ -20,6 +24,6 @@ public class Easter extends Holiday {
 
     @Override
     public String toString() {
-        return "Easter{}";
+        return "Easter calculation is not yet implemented";
     }
 }

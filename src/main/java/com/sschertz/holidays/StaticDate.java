@@ -9,7 +9,14 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 /**
- * Created by schertzs on 2/18/2016.
+ * Represents a {@link Holiday} for holidays that fall on a specific date every year.
+ * For example, Christmas Day is always on December 25th.
+ *
+ * A {@code StaticDate} holiday CAN be defined with a special {@code forceWeekday}
+ * flag. This is typically used to calcuate when static holiday is actully observed
+ * if it falls on a weekend. For instance, if Christmas Day falls on a Sunday, it
+ * is normally observed (for the purposes of days off) on Monday. Note that
+ * this functionality is not yet implemented.
  */
 final class StaticDate extends Holiday {
 
@@ -17,7 +24,7 @@ final class StaticDate extends Holiday {
     private int day;
     private boolean forceWeekday = false;
 
-    public StaticDate(JsonObject holidayDefJson){
+    public StaticDate(JsonObject holidayDefJson) {
         super(holidayDefJson);
 
         // Set the rule-specific fields for this subclass
@@ -37,7 +44,7 @@ final class StaticDate extends Holiday {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.getDisplayName());
         sb.append(" occurs on ");
@@ -45,7 +52,7 @@ final class StaticDate extends Holiday {
         sb.append(" ");
         sb.append(this.day);
         sb.append(" every year. ");
-        if (forceWeekday == true){
+        if (forceWeekday == true) {
             sb.append("If it falls on a weekend, the holidays is observed on either the Friday before or Monday after");
         }
 

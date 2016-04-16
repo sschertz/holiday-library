@@ -11,9 +11,8 @@ import java.util.Locale;
 /**
  * Represents a {@link Holiday} for holidays that fall on the LAST
  * occurrence of a specific day of the week in a month.
- *
+ * <p>
  * For example, "Memorial Day" is always on the last Monday in May.
- *
  */
 final class LastInMonth extends Holiday {
 
@@ -34,8 +33,6 @@ final class LastInMonth extends Holiday {
         return DateUtilities.getLastSpecifiedDayInMonth(year, month, dayOfWeek);
 
     }
-
-
 
     @Override
     public String toString() {
