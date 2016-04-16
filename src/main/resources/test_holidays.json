@@ -1,0 +1,44 @@
+{
+  "name": "Test Holidays",
+  "version": "1.0",
+  "lastUpdated": "2016-02-22",
+  "locale": "US",
+  "supportedHolidays": {
+    "test last thursday in may":{
+      "name": "test last thursday in may",
+      "displayName": "Last Thursday in May",
+      "type": "last_in_month",
+      "rule":{
+        "month": "may",
+        "dayOfWeek": "thursday"
+      }
+    },
+    "test sunday in last week of april":{
+      "name": "test sunday in last week of april",
+      "displayName": "Sunday in the Last Full Week of April",
+      "type": "last_full_week_of_month",
+      "rule":{
+        "month": "april",
+        "dayOfWeek": "sunday"
+      }
+    },
+    "test first week of the month":{
+      "name": "test first week of the month",
+      "displayName": "First Sunday of November",
+      "type": "first_full_week_of_month",
+      "rule":{
+        "month": "november",
+        "dayOfWeek": "sunday"
+      }
+    },
+    "test first full week": {
+      "type": "first_full_week_of_month",
+      "name": "test first full week",
+      "displayName": "Test First Full Week",
+      "rule": {
+        "dayOfWeek": "wednesday",
+        "month": "september"
+      }
+    }
+  }
+}

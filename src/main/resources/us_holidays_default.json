@@ -1,0 +1,356 @@
+{
+  "name": "Default Supported Holidays",
+  "version": "1.0",
+  "lastUpdated": "2016-02-18",
+  "locale": "US",
+  "supportedHolidays": {
+    "christmas": {
+      "name": "christmas",
+      "displayName": "Christmas Day",
+      "type": "static_date",
+      "rule": {
+        "month": "december",
+        "day": 25,
+        "forceWeekday": false
+      }
+    },
+    "christmas observed": {
+      "name": "christmas observed",
+      "displayName": "Christmas Day (Observed)",
+      "type": "static_date",
+      "rule": {
+        "month": "december",
+        "day": 25,
+        "forceWeekday": true
+      }
+    },
+    "christmas eve": {
+      "name": "christmas eve",
+      "displayName": "Christmas Eve",
+      "type": "static_date",
+      "rule": {
+        "month": "december",
+        "day": 24
+      }
+    },
+    "labor day": {
+      "name": "labor day",
+      "displayName": "Labor Day",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "monday",
+        "week": 1,
+        "month": "september"
+      }
+    },
+    "presidents day": {
+      "name": "presidents day",
+      "displayName": "Presidents Day",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "monday",
+        "week": 3,
+        "month": "february"
+      }
+    },    
+    "us election day": {
+      "name": "us election day",
+      "displayName": "Election Day (US)",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "tuesday",
+        "week": 1,
+        "month": "november",
+        "afterFirst": "monday"
+      }
+    },
+    "memorial day": {
+      "name": "memorial day",
+      "displayName": "Memorial Day",
+      "type": "last_in_month",
+      "rule": {
+        "dayOfWeek": "monday",
+        "month": "may"
+      }
+    },
+    "administrative professionals day": {
+      "name": "administrative professionals day",
+      "displayName": "Administrative Professionals Day",
+      "type": "last_full_week_of_month",
+      "rule": {
+        "dayOfWeek": "wednesday",
+        "month": "april"
+      }
+    },
+    "easter": {
+      "name": "easter",
+      "displayName": "Easter Sunday",
+      "type": "easter",
+      "rule": {
+        "easter": "easter"
+      }
+    },
+    "palm sunday": {
+      "name": "palm sunday",
+      "displayName": "Palm Sunday",
+      "type": "days_before_holiday",
+      "rule": {
+        "holiday": "easter",
+        "daysBefore": 14
+      }
+    },
+    "good friday": {
+      "name": "good friday",
+      "displayName": "Good Friday",
+      "type": "days_before_holiday",
+      "rule": {
+        "holiday": "easter",
+        "daysBefore": 2
+      }
+    },
+    "independence day": {
+      "name": "independence day",
+      "displayName": "Independence Day",
+      "type": "static_date",
+      "rule": {
+        "month": "july",
+        "day": 4
+      }
+    },
+    "halloween": {
+      "name": "halloween",
+      "displayName": "Halloween",
+      "type": "static_date",
+      "rule": {
+        "month": "october",
+        "day": 31
+      }
+    },
+    "new years day": {
+      "name": "new years day",
+      "displayName": "New Year's Day",
+      "type": "static_date",
+      "rule": {
+        "month": "january",
+        "day": 1
+      }
+    },
+    "new years eve": {
+      "name": "new years eve",
+      "displayName": "New Year's Eve",
+      "type": "static_date",
+      "rule": {
+        "month": "december",
+        "day": 31
+      }
+    },
+    "martin luther king day": {
+      "name": "martin luther king day",
+      "displayName": "Martin Luther King Day",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "monday",
+        "week": 3,
+        "month": "january"
+      }
+    },
+    "groundhog day": {
+      "name": "groundhog day",
+      "displayName": "Groundhog Day",
+      "type": "static_date",
+      "rule": {
+        "month": "february",
+        "day": 2
+      }
+    },
+    "arbor day": {
+      "name": "arbor day",
+      "displayName": "Arbor Day",
+      "type": "last_in_month",
+      "rule": {
+        "dayOfWeek": "friday",
+        "month": "april"
+      }
+    },
+    "st patricks day": {
+      "name": "st patricks day",
+      "displayName": "St. Patrick's Day",
+      "type": "static_date",
+      "rule": {
+        "month": "march",
+        "day": 17
+      }
+    },
+    "mothers day": {
+      "name": "mothers day",
+      "displayName": "Mother's Day",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "sunday",
+        "week": 2,
+        "month": "may"
+      }
+    },
+    "earth day": {
+      "name": "earth day",
+      "displayName": "Earth Day",
+      "type": "static_date",
+      "rule": {
+        "month": "april",
+        "day": 22
+      }
+    },
+    "armed forces day": {
+      "name": "armed forces day",
+      "displayName": "Armed Forces Day (US)",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "saturday",
+        "week": 3,
+        "month": "may"
+      }
+    },
+    "harvey milk day": {
+      "name": "harvey milk day",
+      "displayName": "Harvey Milk Day",
+      "type": "static_date",
+      "rule": {
+        "month": "may",
+        "day": 22
+      }
+    },
+    "d-day": {
+      "name": "d-day",
+      "displayName": "D-Day (US)",
+      "type": "static_date",
+      "rule": {
+        "month": "june",
+        "day": 6
+      }
+    },
+    "flag day": {
+      "name": "flag day",
+      "displayName": "Flag Day (US)",
+      "type": "static_date",
+      "rule": {
+        "month": "june",
+        "day": 14
+      }
+    },
+    "juneteenth": {
+      "name": "juneteenth",
+      "displayName": "Juneteenth (US)",
+      "type": "static_date",
+      "rule": {
+        "month": "june",
+        "day": 19
+      }
+    },
+    "fathers day": {
+      "name": "fathers day",
+      "displayName": "Father's Day",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "sunday",
+        "week": 3,
+        "month": "june"
+      }
+    },
+    "indigenous peoples day": {
+      "name": "indigenous peoples day",
+      "displayName": "Indigenous People's Day",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "monday",
+        "week": 2,
+        "month": "october"
+      }
+    },
+    "native americans day": {
+      "name": "native americans day",
+      "displayName": "Native American's Day",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "monday",
+        "week": 2,
+        "month": "october"
+      }
+    },
+    "all souls day": {
+      "name": "all souls day",
+      "displayName": "All Souls' Day",
+      "type": "static_date",
+      "rule": {
+        "month": "november",
+        "day": 2
+      }
+    },
+    "day of the dead": {
+      "name": "day of the dead",
+      "displayName": "Day of the Dead",
+      "type": "static_date",
+      "rule": {
+        "month": "november",
+        "day": 2
+      }
+    },
+    "veterans day": {
+      "name": "veterans day",
+      "displayName": "Veterans Day",
+      "type": "static_date",
+      "rule": {
+        "month": "november",
+        "day": 11
+      }
+    },
+    "thanksgiving day": {
+      "name": "thanksgiving day",
+      "displayName": "Thanksgiving Day",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "thursday",
+        "week": 4,
+        "month": "november"
+      }
+    },
+    "black friday": {
+      "name": "black friday",
+      "displayName": "Black Friday",
+      "type": "week_in_month",
+      "rule": {
+        "dayOfWeek": "friday",
+        "week": 4,
+        "month": "november"
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
