@@ -20,7 +20,6 @@ public abstract class Holiday implements Comparable {
      * Constructor for a {@code Holiday} object. Creates a new {@code Holiday}
      * object from the provided JSON.
      * <p>
-     * TODO: Should this NOT be public?
      *
      * @param holidayDefJson a {@code JsonObject} containing the definition for the holiday.
      */
@@ -78,6 +77,10 @@ public abstract class Holiday implements Comparable {
         return type;
     }
 
+    /**
+     *
+     * @return
+     */
     JsonObject getRule() {
         return rule;
     }
@@ -103,12 +106,12 @@ public abstract class Holiday implements Comparable {
     protected abstract LocalDate getDate(int year);
 
     /**
-     * Returns either the {@link .TimeFrame.NEXT} or {@link .TimeFrame.LAST} occurrence of the holiday,
+     * Returns either the {@link TimeFrame#NEXT} or {@link TimeFrame#LAST} occurrence of the holiday,
      * based on today's date.
      *
      * @param timeFrame a {@link TimeFrame} indicating whether to return the
-     *                  {@link .TimeFrame.NEXT} occurrence of
-     *                  the holiday or the {@link .TimeFrame.LAST} occurrence of the holiday.
+     *                  {@link TimeFrame#NEXT} occurrence of
+     *                  the holiday or the {@link TimeFrame#LAST} occurrence of the holiday.
      * @return a {@code LocalDate} with either the next or previous occurrence of
      * the holiday, from today.
      */

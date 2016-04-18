@@ -18,11 +18,11 @@ public class DateUtilities {
 
     /**
      * Returns a {@code LocalDate} for the first day of the specified {@code month} in the specified
-     * {@year}.
+     * {@code year}.
      *
      * @param year the year
      * @param month the month
-     * @return a {@code LocalDate} for the first day of the {@code month} and {@cide year}.
+     * @return a {@code LocalDate} for the first day of the {@code month} and {@code year}.
      */
     public static LocalDate getFirstDayOfMonth(int year, Month month){
         return LocalDate.of(year, month, 1);

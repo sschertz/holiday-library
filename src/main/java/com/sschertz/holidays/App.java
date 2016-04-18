@@ -1,5 +1,6 @@
 package com.sschertz.holidays;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -24,6 +25,14 @@ public class App {
             sb.append(" (" + holiday.toString() + ").");
 
             System.out.println(sb.toString());
+
+        }
+
+        System.out.println("Just make sure Easter is right...");
+
+        Holiday easter = holidays.getHoliday(HolidayFactory.DefaultHolidays.EASTER);
+        for (int year = 2010; year < 2021; year++){
+            System.out.println(year + ": " + easter.getDate(year));
 
         }
 

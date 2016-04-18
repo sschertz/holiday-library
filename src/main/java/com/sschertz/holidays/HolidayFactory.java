@@ -14,12 +14,12 @@ import java.util.List;
  * Creates {@link Holiday} objects based on rules for calculating different holidays. The rules for the
  * holidays are pre-defined.
  * <p>
- * Use {@link .fromDefaults()} to instantiate this class with a default set of holidays (currently well-known
+ * Use {@link #fromDefaults()} to instantiate this class with a default set of holidays (currently well-known
  * holidays recognized in the United States).
  * <p>
- * Once you have a {@code HolidayFactory}, call {@link .getHoliday()} to retrieve a specific holiday.
+ * Once you have a {@code HolidayFactory}, call {@link #getHoliday(String)} to retrieve a specific holiday.
  * <p>
- * Use {@link .getSupportedHolidays()} to get a {@code List} of all holidays this {@code HolidayFactory} can return.
+ * Use {@link #getSupportedHolidays()} to get a {@code List} of all holidays this {@code HolidayFactory} can return.
  */
 public class HolidayFactory {
 
@@ -168,7 +168,19 @@ public class HolidayFactory {
             case EASTER:
                 return new Easter(jsonRule);
             case DAYS_BEFORE_HOLIDAY:
-                return new DaysBeforeHoliday(jsonRule);
+                // This is a special case that depends on another holiday.
+                // We need to make sure that the other holiday definition exists
+                // within the set of holidays supported by this HolidayFactory
+
+                JsonObject otherHolidayJson = jsonRule.get("rule").asObject();
+                String otherHolidayString = otherHolidayJson.get("holiday").asString();
+                if (this.isHolidayDefined(otherHolidayString)) {
+                    return new DaysBeforeHoliday(jsonRule, this.getHoliday(otherHolidayString));
+                } else {
+                    // the holiday definition is invalid. It depends on a holiday
+                    // that has not been defined.
+                    throw new IllegalArgumentException("Holiday rule definition is invalid");
+                }
             default:
                 System.out.println("Fell all the way into default.");
                 break;
@@ -186,7 +198,7 @@ public class HolidayFactory {
      * holiday should be calculated.
      * <p>
      * The {@link DefaultHolidays} enum currently supports the set of holidays retrieved using
-     * {@link .fromDefaults()}. If this {@code HolidayFactory} has been initialized with
+     * {@link #fromDefaults()}. If this {@code HolidayFactory} has been initialized with
      * a different set of holidays, this method throws an {@link IllegalArgumentException}.
      *
      * @param holiday a {@code DefaultHoliday} for the holiday to retrieve.
@@ -274,7 +286,7 @@ public class HolidayFactory {
 
     public enum DefaultHolidays {
         /**
-         * Enumeration of all supported holidays in the default set (obtained with {@link .fromDefaults}.
+         * Enumeration of all supported holidays in the default set (obtained with {@link #fromDefaults}).
          * This can be used for convenience when retrieving a specific known holiday from the set.
          * <p>
          * The {@code friendlyName} matches the name used to identify the holiday in the JSON files.

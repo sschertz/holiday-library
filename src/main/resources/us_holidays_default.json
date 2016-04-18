@@ -96,7 +96,7 @@
       "type": "days_before_holiday",
       "rule": {
         "holiday": "easter",
-        "daysBefore": 14
+        "daysBefore": 7
       }
     },
     "good friday": {
@@ -321,6 +321,25 @@
         "dayOfWeek": "friday",
         "week": 4,
         "month": "november"
+      }
+    },
+    "ash wednesday": {
+      "name": "ash wednesday",
+      "displayName": "Ash Wednesday",
+      "type": "days_before_holiday",
+      "rule": {
+        "holiday": "easter",
+        "daysBefore": 46,
+        "specialDescription": "occurs before Easter and marks the start of Lent."
+      }
+    },
+    "mardi gras": {
+      "name": "mardi gras",
+      "displayName": "Mardi Gras",
+      "type": "days_before_holiday",
+      "rule": {
+        "holiday": "ash wednesday",
+        "daysBefore": 1
       }
     }
   }
