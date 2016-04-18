@@ -90,7 +90,7 @@ public abstract class Holiday implements Comparable {
      *
      * @return a {@code LocalDate} specifying the date the holiday occurs in the current year.
      */
-    final LocalDate getDate() {
+    public final LocalDate getDate() {
         return getDate(LocalDate.now().getYear());
     }
 
@@ -103,7 +103,7 @@ public abstract class Holiday implements Comparable {
      * @param year The year
      * @return a {@code LocalDate} with the date of the holidays in the specified year.
      */
-    protected abstract LocalDate getDate(int year);
+    public abstract LocalDate getDate(int year);
 
     /**
      * Returns either the {@link TimeFrame#NEXT} or {@link TimeFrame#LAST} occurrence of the holiday,
