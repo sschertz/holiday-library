@@ -4,6 +4,7 @@ import com.sschertz.holidays.Holiday;
 import com.sschertz.holidays.HolidayFactory;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 public class HolidaySampleApp {
@@ -35,16 +36,21 @@ public class HolidaySampleApp {
 
         Holiday myHoliday = holidays.getHoliday(HolidayFactory.DefaultHolidays.PRESIDENTS_DAY);
 
-        // You can get the NEXT occurrence, the LAST occurrence, the occurrence for the
-        // current year, or the occurrence in a specific year. NEXT and LAST use
-        // today's date as a reference point.
-        LocalDate date = myHoliday.getDate(Holiday.TimeFrame.NEXT);
+        /*
+            Once you have a holiday, you can get the NEXT occurrence, the LAST
+            occurrence, the occurrence for the current year, or the occurrence
+            in a specific year. NEXT and LAST use today's date as a reference point.
+         */
+        System.out.println("Get the dates for a holiday");
+        ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+
+        LocalDate date = myHoliday.getDate(Holiday.TimeFrame.NEXT, zoneId);
         System.out.println("The next " +
                 myHoliday.getDisplayName() +
                 " occurs on " +
                 date.toString());
 
-        date = myHoliday.getDate(Holiday.TimeFrame.LAST);
+        date = myHoliday.getDate(Holiday.TimeFrame.LAST, zoneId);
         System.out.println("The last " +
                 myHoliday.getDisplayName() +
                 " occurred on " +
@@ -55,6 +61,13 @@ public class HolidaySampleApp {
         System.out.println("In 2020, " +
                 myHoliday.getDisplayName() +
                 " occurs on " +
+                date.toString());
+
+        date = myHoliday.getDate();
+        System.out.println("In the current year of " +
+                LocalDate.now().getYear() + ", " +
+                myHoliday.getDisplayName() +
+                " falls on " +
                 date.toString());
 
         System.out.println();

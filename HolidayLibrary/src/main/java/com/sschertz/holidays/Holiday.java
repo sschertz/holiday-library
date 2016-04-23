@@ -3,6 +3,7 @@ package com.sschertz.holidays;
 import com.eclipsesource.json.JsonObject;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 /**
  * Represents the definition of a particular date, typically used to calculate
@@ -107,32 +108,36 @@ public abstract class Holiday implements Comparable {
 
     /**
      * Returns either the {@link TimeFrame#NEXT} or {@link TimeFrame#LAST} occurrence of the holiday,
-     * based on today's date.
+     * based on today's date. Uses the provided time zone when determining today's date.
+     *
+     * If the holiday occurs today, both {@link TimeFrame#NEXT} and {@link TimeFrame#LAST}
+     * return today's date.
      *
      * @param timeFrame a {@link TimeFrame} indicating whether to return the
      *                  {@link TimeFrame#NEXT} occurrence of
      *                  the holiday or the {@link TimeFrame#LAST} occurrence of the holiday.
+     * @param zoneId    a {@code ZoneId} for a time zone to use when determining today.
      * @return a {@code LocalDate} with either the next or previous occurrence of
      * the holiday, from today.
      */
-    public final LocalDate getDate(TimeFrame timeFrame) {
+    public final LocalDate getDate(TimeFrame timeFrame, ZoneId zoneId) {
         // Need to get the holiday date first, as we don't know if it will
         // fall before or after today
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(zoneId);
         int year = today.getYear();
 
         LocalDate holiday = this.getDate(year);
 
         if (timeFrame == Holiday.TimeFrame.NEXT) {
             // return the holidays if it is on or after today, otherwise get a new one
-            if (holiday.isAfter(today)) {
+            if (holiday.isAfter(today) || holiday.isEqual(today)) {
                 return holiday;
             } else {
                 return this.getDate(++year);
             }
         } else {
-            // we want holidays before today
-            if (holiday.isBefore(today)) {
+            // we want holidays on or before today
+            if (holiday.isBefore(today) || holiday.isEqual(today)) {
                 return holiday;
             } else {
                 return this.getDate(--year);
