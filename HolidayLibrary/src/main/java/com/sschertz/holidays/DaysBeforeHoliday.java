@@ -5,7 +5,6 @@ import com.eclipsesource.json.JsonObject;
 import java.time.LocalDate;
 
 /**
- *
  * Represents a {@link Holiday} for holidays that are calculated based on the date
  * of a different holiday. For example, Good Friday is two days before Easter Sunday.
  *
@@ -24,7 +23,7 @@ class DaysBeforeHoliday extends Holiday {
     private Holiday otherHoliday;
     private String specialDescription = null;
 
-    public DaysBeforeHoliday(JsonObject holidayDefJson, Holiday otherHoliday) {
+    DaysBeforeHoliday(JsonObject holidayDefJson, Holiday otherHoliday) {
         super(holidayDefJson);
 
         daysBefore = getRule().get("daysBefore").asInt();

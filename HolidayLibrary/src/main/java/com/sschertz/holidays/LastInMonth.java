@@ -19,7 +19,7 @@ final class LastInMonth extends Holiday {
     private Month month;
     private DayOfWeek dayOfWeek;
 
-    public LastInMonth(JsonObject holidayDefJson) {
+    LastInMonth(JsonObject holidayDefJson) {
         super(holidayDefJson);
 
         // Set the rule-specific fields for this subclass

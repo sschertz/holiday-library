@@ -1,21 +1,23 @@
 # Holiday Calculation Library
 
-This is a simple Java library for calculating the dates of various holidays. It currently can return the date for several fairly well-known US holidays (and a few more obscure ones). It uses a JSON file to define the rules for the supported holidays, so adding new ones is fairly easy (as long as they don't require new rules).
+This is a simple Java library for calculating the dates of various holidays. I created this for a personal project where I needed to easily get the dates of various US holidays.
+
+It currently can return the date for several fairly well-known US holidays (and a few more obscure ones). It uses a JSON file to define the rules for the supported holidays, so adding new ones is fairly easy (as long as they don't require logic I haven't yet implemented).
 
 ## Getting a HolidayFactory
 
-Call the `static` method `HolidayFactory.fromDefaults()` to get a new `HolidayFactory` with the default set of US holidays. This gets a new object populated with the holidays defined in `us_holidays_default.json`.
+Call the `static` method `HolidayFactory.fromDefaults()` to get a new `HolidayFactory` with the default set of US holidays. This gets a new object that can return any of the holidays defined in `us_holidays_default.json`.
 
 ```java
 // Get a HolidayFactory using the default holidays
 HolidayFactory holidays = HolidayFactory.fromDefaults();
 ```
 
-I do have additional methods for using other config files, but this is mostly for testing and possible future features. At some point, I might create configuration files for additional holiday sets, such as by locale.
+I do have additional methods for using other configuration files, but this is mostly for testing and possible future features. At some point, I might create configuration files for additional holiday sets, such as by locale.
 
 ## Getting a Particular Holiday
 
-Once you have a `HolidayFactory`, call `getHoliday()` to get a new `Holiday` object representing a particular holiday. You can specify the holiday you want by string or using a value from the `HolidayFactory.DefaultHolidays` enum.
+Once you have a `HolidayFactory`, call `getHoliday()` to get a new `Holiday` object representing a particular holiday. You can specify the holiday you want by string or using a value from the `HolidayFactory.DefaultHolidays` enumeration.
 
 When using a string, it must match exactly the name of the holiday as defined in the JSON file. Use `isHolidayDefined()` to make sure the holiday exists first.
 
@@ -45,18 +47,22 @@ You can also call `getSupportedHolidays` to get a `List` containing a `Holiday` 
 
 ## Accessing Data about a Specific Holiday
 
-The main goal of these utilities is to calculate the date for a particular holiday. Use one of the `getDate()` methods on the `Holiday` object.
+Use one of the `getDate()` methods on the `Holiday` object:
 
-You can get the *next* or *last* occurrence (using today's date as a reference point). You can also specify a particular year. Call `getDate()` with no arguments to get the date for the current year, regardless of whether it is before or after today.
+- Pass `getDate()` a value from the `Holiday.Timeframe` enumeration and a time zone to get the `NEXT` or `NEXT` occurrence. This uses today's date as a reference point. The time zone is needed to ensure that "today" is the date you expect.
+- Pass `getDate()` a specific year to get the date of the holiday in that year.
+- Call `getDate()` with no arguments to get the date for the current year, regardless of whether it is before or after today.
 
 ```java
-LocalDate date = myHoliday.getDate(Holiday.TimeFrame.NEXT);
+ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+
+LocalDate date = myHoliday.getDate(Holiday.TimeFrame.NEXT, zoneId);
 System.out.println("The next " +
         myHoliday.getDisplayName() +
         " occurs on " +
         date.toString());
 
-date = myHoliday.getDate(Holiday.TimeFrame.LAST);
+date = myHoliday.getDate(Holiday.TimeFrame.LAST, zoneId);
 System.out.println("The last " +
         myHoliday.getDisplayName() +
         " occurred on " +
@@ -67,13 +73,23 @@ System.out.println("In 2020, " +
         myHoliday.getDisplayName() +
         " occurs on " +
         date.toString());
+
+date = myHoliday.getDate();
+System.out.println("In the current year of " +
+        LocalDate.now().getYear() + ", " +
+        myHoliday.getDisplayName() +
+        " falls on " +
+        date.toString());
 ```
 
 Output:
-    
-    The next Presidents Day occurs on 2017-02-20
-    The last Presidents Day occurred on 2016-02-15
-    In 2020, Presidents Day occurs on 2020-02-17
+
+``` 
+The next Presidents Day occurs on 2017-02-20
+The last Presidents Day occurred on 2016-02-15
+In 2020, Presidents Day occurs on 2020-02-17
+In the current year of 2016, Presidents Day falls on 2016-02-15
+```
 
 ## DateUtilities Class
 
@@ -123,7 +139,7 @@ The file includes some top-level properties for meta-data about the file (`name`
 }
 ```
 
-### Common Properties for All Holidays
+### Properties Used to Define a Holiday
 
 Each holiday definition must have the following properties:
 
@@ -132,60 +148,94 @@ Each holiday definition must have the following properties:
 - `type`
 - `rule`
 
-The `type` identifies the type of rule used to calculate the holiday's date. The `rule` property defines fields specific to that particular holiday type. The following rules are currently supported:
+The `type` identifies the type of rule used to calculate the holiday's date. The `rule` property is an object that defines any fields specific to that particular holiday type. 
+
+The following sections summarize the valid `type` values and the properties that should be included within the `rule` object for each `type`.
 
 ### easter
 
-Special rules only used for easter
+Special rules only used for easter. This type has no type-specific rules, so the `rule` property should be set to an empty object:
 
-days_before_holiday      
+```json
+{
+  "easter": {
+    "name": "easter",
+    "displayName": "Easter Sunday",
+    "type": "easter",
+    "rule": {}
+  }
+}
+```
+
+### days_before_holiday      
 
 Holiday that occurs a specific number of days before another holiday.
 
-`holiday` (the other holiday)          
-`daysBefore` (the number of days before the other holiday)
-`specialDescription` (optional, a string used to provide a human-friendly description of how the holiday is calculated)
+Rule fields:
+
+- `holiday`: the other holiday. This holiday must be defined in the same configuration file.
+- `daysBefore`: the number of days before the other holiday.
+- `specialDescription`: (optional) a string used to provide a human-friendly description of how the holiday is calculated.
 
 ### first_full_week_of_month   
 
 Holiday that occurs on a specific day of the week in the *first full week* of a particular month. This is included for completeness, but none of the holidays in the default set use this rule.
 
-`dayOfWeek` (the day of the week)
-`month` (the month)                                     
+Rule fields:
+
+- `dayOfWeek`: the day of the week, provided as a string name such as "monday".
+- `month`: the month, provided as a string such as "september".                                     
 
 ### last_full_week_of_month
 
 Holiday that occurs on a specific day of the week in the *last full week* of a particular month (such as admin professionals day on the Wednesday of the last full week of April).
 
-`dayOfWeek` (the day of the week)
-`month` (the month)              
+Rule fields:
+
+- `dayOfWeek`: the day of the week, provided as a string name such as "monday".
+- `month`: the month, provided as a string such as "september".
 
 ### last_in_month
 
 Holiday that occurs on the last instance of a particular week day of particular month. For example, Memorial Day occurs on the last Monday of May.
 
-`dayOfWeek` (the day of the week)  
-`month` (the month)
+Rule fields:
+
+- `dayOfWeek`: the day of the week, provided as a string name such as "monday".
+- `month`: the month, provided as a string such as "september".
 
 ### static_date
 
-Holiday that occurs on a set date every year. For example, Christmas is always on December 25.
+Holiday that occurs on a set date every year. For example, Christmas is always on December 25. 
 
-`day` (the day)                                
-`month` (the month)                            
-`forceWeekday` 
+Rule fields:
 
-a `boolean` indicating whether the holiday should be moved to either Friday or Monday if it falls on a weekend. Note that this is not yet implemented.
+- `day`: the day, provided as an integer.          
+- `month`: the month, provided as a string such as "september".
+- `forceWeekday`: (optional) a `boolean` indicating whether the holiday should be moved to either Friday or Monday if it falls on a weekend. Defaults to `false` if not provided. *Note that this is not yet implemented*.
 
 ### week_in_month
 
-Holiday that occurs on a particular week day in a particular week of a month. For example, Labor Day is on the first Monday in September
+Holiday that occurs on a particular week day in a particular week of a month. For example, Labor Day is on the first Monday in September.
 
-`dayOfWeek` (the day of the week)             
-`week` (integer for the week of the month)    
-`month` (the month)                           
-`afterFirst` (optional, include if the holiday must fall *after* the first instance of a particular day. For example, US Election Day falls on the first Tuesday of November, but only after the first Monday).
+- `dayOfWeek`: the day of the week, provided as a string name such as "monday".
+- `week`: integer for the week of the month.
+- `month`: the month, provided as a string such as "september".
+- `afterFirst`: (optional) the day of the week that the holiday must fall after. For example, US Election Day falls on the first Tuesday of November, but only after the first Monday. So the configuration for this holiday would include `"afterFirst": "monday"`.
 
+## HolidaySample Project
 
-## Maven Dependency
-(once this is in maven)
+See the provided `HolidaySample` project for sample code calling the library.
+
+## Future Updates
+
+This isn't really finished...some potential updates:
+
+- [ ] Finish implementing the logic for forcing static date holidays to either Friday or Monday. This would be useful for calculating the dates those are observed for the purposes of days off or bank holidays.
+- [ ] Add additional "observed" holidays to the main config json.
+- [ ] More sorting options when getting a list of `Holiday` objects.
+- [ ] Add support for more holidays.
+- [ ] Add support for holidays outside the US.
+- [ ] Add ability to read the holiday configuration from a passed-in filename.
+
+I also intend to improve the JavaDoc a bit, especially for consistency.

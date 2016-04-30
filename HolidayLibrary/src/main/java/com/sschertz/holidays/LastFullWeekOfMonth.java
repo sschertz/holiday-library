@@ -24,7 +24,7 @@ class LastFullWeekOfMonth extends Holiday {
     private Month month;
     private DayOfWeek dayOfWeek;
 
-    public LastFullWeekOfMonth(JsonObject holidayDefJson) {
+    LastFullWeekOfMonth(JsonObject holidayDefJson) {
         super(holidayDefJson);
 
         month = Month.valueOf(getRule().get("month").asString().toUpperCase());

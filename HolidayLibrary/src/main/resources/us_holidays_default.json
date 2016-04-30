@@ -86,9 +86,7 @@
       "name": "easter",
       "displayName": "Easter Sunday",
       "type": "easter",
-      "rule": {
-        "easter": "easter"
-      }
+      "rule": {}
     },
     "palm sunday": {
       "name": "palm sunday",

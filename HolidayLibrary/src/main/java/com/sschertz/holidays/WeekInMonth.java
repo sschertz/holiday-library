@@ -22,7 +22,7 @@ class WeekInMonth extends Holiday {
     private static final String[] WEEKS_IN_MONTH = {"first", "second", "third", "fourth", "fifth"};
 
 
-    public WeekInMonth(JsonObject holidayDefJson) {
+    WeekInMonth(JsonObject holidayDefJson) {
         super(holidayDefJson);
 
         // Set the rule-specific fields for this subclass. Should be able to get

@@ -56,7 +56,6 @@ public class HolidaySampleApp {
                 " occurred on " +
                 date.toString());
 
-
         date = myHoliday.getDate(2020);
         System.out.println("In 2020, " +
                 myHoliday.getDisplayName() +

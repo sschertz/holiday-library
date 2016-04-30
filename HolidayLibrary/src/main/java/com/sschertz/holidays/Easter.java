@@ -11,7 +11,7 @@ import java.time.LocalDate;
  */
 class Easter extends Holiday {
 
-    public Easter(JsonObject holidayDefJson) {
+    Easter(JsonObject holidayDefJson) {
         // No holiday-specific rules, we only need the year.
         super(holidayDefJson);
     }

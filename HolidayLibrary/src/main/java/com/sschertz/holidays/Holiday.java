@@ -6,21 +6,23 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 /**
- * Represents the definition of a particular date, typically used to calculate
- * the date on which a particular holiday falls in a year.
+ * Represents the rules for calculating the date of a particular holiday. Use {@link HolidayFactory} to
+ * get an object of this class.
+ * <p>
  * Subclasses must implement the methods that do the calculation.
  */
 public abstract class Holiday implements Comparable {
 
-    static int NUM_DAYS_IN_WEEK = 7;
+    protected static int NUM_DAYS_IN_WEEK = 7;
     private String name, displayName;
     private RuleType type;
     private JsonObject rule;
 
     /**
-     * Constructor for a {@code Holiday} object. Creates a new {@code Holiday}
+     * Package-private constructor for a {@code Holiday} object. Creates a new {@code Holiday}
      * object from the provided JSON.
      * <p>
+     * Use {@link HolidayFactory} to get an object of this class.
      *
      * @param holidayDefJson a {@code JsonObject} containing the definition for the holiday.
      */
@@ -32,16 +34,22 @@ public abstract class Holiday implements Comparable {
         rule = holidayDefJson.get("rule").asObject();
     }
 
+
     /**
-     * Compares the displayName of the two objects to sort alphabetically
-     * <p>
-     * TODO: add options for sorting by either name or date
+     * Compares this {@code Holiday} with the specified {@code Holiday} object.
      *
-     * @param o
-     * @return
+     * This currently uses display name to sort {@code Holiday} objects alphabetically. Future
+     * enhancment to add options for sorting by date.
+     *
+     * @param o the {@code Holiday} object to be compared.
+     * @return a negative integer, zero, or a positive integer depending on whether the display
+     * name for this {@code Holiday} is less than, equal to, or greater than the specified
+     * {@code Holiday} (alphabetically).
      */
     @Override
     public int compareTo(Object o) {
+        // TODO: add options for sorting by either name or date
+
         String thisString = this.getDisplayName();
         Holiday thatHoliday = (Holiday) o;
         String thatString = thatHoliday.getDisplayName();
@@ -79,7 +87,7 @@ public abstract class Holiday implements Comparable {
     }
 
     /**
-     *
+     * Returns the {@code JsonObject} that defines the rule fields for this {@code Holiday}.
      * @return
      */
     JsonObject getRule() {
@@ -96,7 +104,7 @@ public abstract class Holiday implements Comparable {
     }
 
     /**
-     * Returns the date the holidays occurs for the specified year.
+     * Returns the date the holiday occurs for the specified year.
      * <p>
      * Subclasses must implement this to provide the specific logic they need according
      * to their own rules.
@@ -109,7 +117,7 @@ public abstract class Holiday implements Comparable {
     /**
      * Returns either the {@link TimeFrame#NEXT} or {@link TimeFrame#LAST} occurrence of the holiday,
      * based on today's date. Uses the provided time zone when determining today's date.
-     *
+     * <p>
      * If the holiday occurs today, both {@link TimeFrame#NEXT} and {@link TimeFrame#LAST}
      * return today's date.
      *
@@ -146,21 +154,24 @@ public abstract class Holiday implements Comparable {
     }
 
     /**
-     * Enum representing the desired time frame for the holidays:
-     * <p>
-     * LAST: the holidays returned must be before today
-     * NEXT: the holidays returned must be on or after today
-     * ANY: Holiday for the provided year, relationship to today doesn't matter.
+     * Enum representing the desired time frame when calculating the date for a
+     * {@link Holiday}.
      */
     public enum TimeFrame {
-        LAST, NEXT, ANY
+        /**
+         * The date returned must be on or before today.
+         */
+        LAST,
+        /**
+         * The date returned must be on or after today.
+         */
+        NEXT
     }
 
     /**
      * Represents the type of rule needed to calculate the holidays.
      */
     enum RuleType {
-
         /**
          * Easter has its own unique holidays calculation.
          */

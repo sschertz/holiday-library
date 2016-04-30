@@ -24,7 +24,7 @@ class FirstFullWeekOfMonth extends Holiday {
     private Month month;
     private DayOfWeek dayOfWeek;
 
-    public FirstFullWeekOfMonth(JsonObject holidayDefJson) {
+    FirstFullWeekOfMonth(JsonObject holidayDefJson) {
         super(holidayDefJson);
 
         // Set the rule-specific fields for this subclass.

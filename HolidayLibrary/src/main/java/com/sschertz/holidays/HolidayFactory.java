@@ -54,7 +54,7 @@ public class HolidayFactory {
      * Returns a new {@code HolidayFactory} using the default set of holidays (generally
      * well known holidays recognized in the United States)
      *
-     * @return a new {@code HolidayFactory} configured with default US holidays.
+     * @return a new {@code HolidayFactory} that can return any of the default US holidays.
      */
     public static HolidayFactory fromDefaults() {
         return fromResource(RESOURCE_DEFAULT);
@@ -74,8 +74,8 @@ public class HolidayFactory {
      * Returns a new {@code HolidayFactory} using the set of holidays defined in the specified
      * {@code resource}. Returns {@code null} if the resource cannot be found.
      *
-     * @param resource
-     * @return
+     * @param resource name of the resource to use for the configuration file.
+     * @return a new {@code HolidayFactory} that can return holidays defined in the specified resource.
      */
     public static HolidayFactory fromResource(String resource) {
 
@@ -113,40 +113,33 @@ public class HolidayFactory {
         return null;
     }
 
-    private JsonObject getHolidayJson(String holiday) {
-
-        // get the JsonValue for the requested holiday.
-        JsonValue result = supportedHolidaysJson.get(holiday);
-
-        return (result != null) ? result.asObject() : null;
-    }
 
     /**
      * Tests whether this {@code HolidayFactory} contains a definition for the holiday
-     * identified by the provided {@code holiday} string.
+     * identified by the provided {@code holidayName} string.
      *
-     * @param holiday
+     * @param holidayName the {@code String} holiday name to check.
      * @return {@code true} if the specified {@code holiday} is defined; {@code false} otherwise.
      */
-    public boolean isHolidayDefined(String holiday) {
+    public boolean isHolidayDefined(String holidayName) {
 
-        JsonValue result = supportedHolidaysJson.get(holiday);
+        JsonValue result = supportedHolidaysJson.get(holidayName);
         return result != null;
     }
 
     /**
      * Returns a {@link Holiday} object for the holiday identified by the
-     * {@code holiday} string. The {@code Holiday} returned contains
+     * {@code holidayName} string. The {@link Holiday} returned contains
      * basic information (such as a display name) and the specific rules for how the
      * holiday should be calculated.
      *
-     * @param holiday a {@code String} with the name of the holiday to retrieve.
+     * @param holidayName a {@code String} with the name of the holiday to retrieve.
      * @return a {@link Holiday} object for the specified holiday; {@code null} if the
-     * requested holiday is not defined.
+     * requested holiday is not defined in this {@code HolidayFactory}.
      */
-    public Holiday getHoliday(String holiday) {
+    public Holiday getHoliday(String holidayName) {
 
-        JsonObject jsonRule = getHolidayJson(holiday);
+        JsonObject jsonRule = getHolidayJson(holidayName);
         if (jsonRule == null) {
             return null;
         }
@@ -193,7 +186,7 @@ public class HolidayFactory {
 
     /**
      * Returns a {@link Holiday} object for the holiday identified by the
-     * {@link DefaultHolidays} enum value. The {@code Holiday} returned contains
+     * {@link DefaultHolidays} enum value. The {@link Holiday} returned contains
      * basic information (such as a display name) and the specific rules for how the
      * holiday should be calculated.
      * <p>
@@ -201,7 +194,7 @@ public class HolidayFactory {
      * {@link #fromDefaults()}. If this {@code HolidayFactory} has been initialized with
      * a different set of holidays, this method throws an {@link IllegalArgumentException}.
      *
-     * @param holiday a {@code DefaultHoliday} for the holiday to retrieve.
+     * @param holiday a value from {@link DefaultHolidays} for the holiday to retrieve.
      * @return a {@link Holiday} object for the specified holiday; {@code null} if the
      * requested holiday is not defined.
      */
@@ -216,7 +209,9 @@ public class HolidayFactory {
     }
 
     /**
-     * Gets a version number for the holiday configuration file
+     * Gets a version number for the holiday configuration file.
+     * <p>
+     * (This is not currently used for anything)
      *
      * @return a string for the version number
      */
@@ -225,7 +220,9 @@ public class HolidayFactory {
     }
 
     /**
-     * Gets a string specifying when the holiday config file was last updated
+     * Gets a string specifying when the holiday config file was last updated.
+     * <p>
+     * (This is not currently used for anything)
      *
      * @return a string for the last updated date.
      */
@@ -237,7 +234,7 @@ public class HolidayFactory {
      * Gets a string specifying the locale for the holiday config file.
      * <p>
      * Note that this currently does not mean anything -- the factory does
-     * not yet support multiple locales.
+     * not support multiple locales.
      *
      * @return a string containing the locale for the config file.
      */
@@ -246,9 +243,10 @@ public class HolidayFactory {
     }
 
     /**
-     * Gets a {@code List} of all holidays supported by this {@code HolidayFactory}, sorted alphabetically.
+     * Gets a {@code List} of {@link Holiday} objects representing all the holidays
+     * supported by this {@code HolidayFactory}, sorted alphabetically.
      *
-     * @return a {@code List} of supported holidays, sorted alphabetically.
+     * @return a {@code List} of {@link Holiday} objects, sorted alphabetically.
      */
     public List<Holiday> getSupportedHolidays() {
 
@@ -262,8 +260,9 @@ public class HolidayFactory {
     }
 
     /**
-     * Returns a {@code String} containing a comma-separated all holidays supported by
-     * this {@code HolidayFactory}, sorted alphabetically.
+     * Returns a {@code String} containing a comma-separated list of all holidays supported by
+     * this {@code HolidayFactory}, sorted alphabetically. This uses the display name for
+     * the holiday name.
      *
      * @return a comma-separated {@code String} of supported holidays, sorted alphabetically.
      */
@@ -280,18 +279,32 @@ public class HolidayFactory {
         return sb.toString().substring(0, indexLastComma);
     }
 
+    /**
+     * Returns the name of the configuration file used for this {@code HolidayFactory}.
+     *
+     * @return the name of the configuration file.
+     */
     public String getName() {
         return name;
     }
 
+    private JsonObject getHolidayJson(String holiday) {
+
+        // get the JsonValue for the requested holiday.
+        JsonValue result = supportedHolidaysJson.get(holiday);
+
+        return (result != null) ? result.asObject() : null;
+    }
+
+    /**
+     * Enumeration of all supported holidays in the default set (obtained with {@link #fromDefaults}).
+     * This can be used for convenience when retrieving a specific known holiday from the set.
+     * <p>
+     * The {@link DefaultHolidays#getFriendlyName()} method returns the name used to identify
+     * the holiday in the JSON files.
+     * <p>
+     */
     public enum DefaultHolidays {
-        /**
-         * Enumeration of all supported holidays in the default set (obtained with {@link #fromDefaults}).
-         * This can be used for convenience when retrieving a specific known holiday from the set.
-         * <p>
-         * The {@code friendlyName} matches the name used to identify the holiday in the JSON files.
-         * <p>
-         */
         ADMINISTRATIVE_PROFESSIONALS_DAY("administrative professionals day"),
         ALL_SOULS_DAY("all souls day"),
         ARBOR_DAY("arbor day"),

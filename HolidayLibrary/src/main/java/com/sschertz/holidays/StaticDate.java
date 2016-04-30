@@ -24,7 +24,7 @@ final class StaticDate extends Holiday {
     private int day;
     private boolean forceWeekday = false;
 
-    public StaticDate(JsonObject holidayDefJson) {
+    StaticDate(JsonObject holidayDefJson) {
         super(holidayDefJson);
 
         // Set the rule-specific fields for this subclass
