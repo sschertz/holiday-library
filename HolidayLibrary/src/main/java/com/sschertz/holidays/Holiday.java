@@ -161,11 +161,21 @@ public abstract class Holiday implements Comparable {
         /**
          * The date returned must be on or before today.
          */
-        LAST,
+        LAST ("Last"),
         /**
          * The date returned must be on or after today.
          */
-        NEXT
+        NEXT ("Next");
+
+        private String titleCase;
+
+        public String getTitleCase(){
+            return titleCase;
+        }
+
+        TimeFrame(String titleCase){
+            this.titleCase = titleCase;
+        }
     }
 
     /**

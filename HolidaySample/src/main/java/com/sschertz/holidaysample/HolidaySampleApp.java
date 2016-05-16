@@ -43,18 +43,27 @@ public class HolidaySampleApp {
          */
         System.out.println("Get the dates for a holiday");
         ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+        String output = "The %s %s %s on %s";
 
-        LocalDate date = myHoliday.getDate(Holiday.TimeFrame.NEXT, zoneId);
-        System.out.println("The next " +
-                myHoliday.getDisplayName() +
-                " occurs on " +
-                date.toString());
+        Holiday.TimeFrame timeFrame = Holiday.TimeFrame.NEXT;
+        LocalDate date = myHoliday.getDate(timeFrame, zoneId);
+        System.out.println(
+                String.format(
+                        output,
+                        timeFrame.getTitleCase(),
+                        myHoliday.getDisplayName(),
+                        "Occurs",
+                        date.toString()));
 
-        date = myHoliday.getDate(Holiday.TimeFrame.LAST, zoneId);
-        System.out.println("The last " +
-                myHoliday.getDisplayName() +
-                " occurred on " +
-                date.toString());
+        timeFrame = Holiday.TimeFrame.LAST;
+        date = myHoliday.getDate(timeFrame, zoneId);
+        System.out.println(
+                String.format(
+                        output,
+                        timeFrame.getTitleCase(),
+                        myHoliday.getDisplayName(),
+                        "Occurred",
+                        date.toString()));
 
         date = myHoliday.getDate(2020);
         System.out.println("In 2020, " +
@@ -95,10 +104,6 @@ public class HolidaySampleApp {
         for (int year = 2010; year < 2021; year++) {
             System.out.println(year + ": " + easter.getDate(year));
         }
-
-
-
-
 
         System.out.println();
         System.out.println("Testing for the existence of a holiday definition");

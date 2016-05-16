@@ -269,7 +269,7 @@ public class HolidayFactory {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.getName() + ": ");
+        sb.append(this.getName()).append(": ");
         List<Holiday> holidayList = this.getSupportedHolidays();
         for (Holiday holiday : holidayList) {
             sb.append(holiday.getDisplayName());
