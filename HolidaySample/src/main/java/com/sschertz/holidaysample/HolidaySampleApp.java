@@ -20,8 +20,8 @@ public class HolidaySampleApp {
 
         // Get a specific holiday by string - verify it exists first
         System.out.println("Getting a holiday by string");
-        if (holidays.isHolidayDefined("labor day")){
-            Holiday myHoliday = holidays.getHoliday("labor day");
+        if (holidays.isHolidayDefined("election day us")){
+            Holiday myHoliday = holidays.getHoliday("election day us");
             LocalDate myHolidayDate = myHoliday.getDate(2017);
             System.out.println("In 2017, " +
                     myHoliday.getDisplayName() +
@@ -34,7 +34,7 @@ public class HolidaySampleApp {
         // Get a holiday using the enum. This only works when using the default
         // set of holidays (retrieved via HolidayFactory.fromDefaults()).
 
-        Holiday myHoliday = holidays.getHoliday(HolidayFactory.DefaultHolidays.PRESIDENTS_DAY);
+        Holiday myHoliday = holidays.getHoliday(HolidayFactory.DefaultHolidays.THANKSGIVING_DAY);
 
         /*
             Once you have a holiday, you can get the NEXT occurrence, the LAST

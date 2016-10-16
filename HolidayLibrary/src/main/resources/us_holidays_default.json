@@ -53,7 +53,7 @@
         "month": "february"
       }
     },    
-    "us election day": {
+    "election day us": {
       "name": "election day us",
       "displayName": "Election Day (US)",
       "type": "week_in_month",
