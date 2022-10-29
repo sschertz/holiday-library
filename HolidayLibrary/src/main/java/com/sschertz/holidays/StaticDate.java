@@ -3,6 +3,7 @@ package com.sschertz.holidays;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
@@ -37,10 +38,26 @@ final class StaticDate extends Holiday {
 
     @Override
     public LocalDate getDate(int year) {
-        //TODO: Implement handling of the forceWeekday rule!
+        final LocalDate calendarDate = LocalDate.of(year, month, day);
+        if (forceWeekday){
+            return getObservedDateFrom(calendarDate);
+        } else {
+            return calendarDate;
+        }
+    }
 
-        return LocalDate.of(year, month, day);
+    private LocalDate getObservedDateFrom(LocalDate calendarDate) {
+        final DayOfWeek dayOfWeek = calendarDate.getDayOfWeek();
 
+        if (dayOfWeek.equals(DayOfWeek.SATURDAY)) {
+            return LocalDate.of(calendarDate.getYear(), month, day - 1);
+
+        } else if (dayOfWeek.equals(DayOfWeek.SUNDAY)) {
+            return LocalDate.of(calendarDate.getYear(), month, day + 1);
+
+        } else {
+            return calendarDate;
+        }
     }
 
     @Override
